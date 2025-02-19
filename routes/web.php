@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\backoffice\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\backoffice\AdminController;
 use App\Http\Controllers\backoffice\AuthController;
@@ -12,13 +13,17 @@ Route::prefix('backoffice')->name('backoffice.')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])
         ->name('forgot-password');
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 
 
-Route::middleware(['auth', 'admin','showMenu'])->group(function () {
-    Route::get('backoffice/dashboard', [AdminController::class, 'dashboard'])
-        ->name('backoffice.dashboard');
+Route::middleware(['auth', 'admin','showMenu'])->prefix('backoffice')->name('backoffice.')->group(function () {
+    Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::resource('category', CategoryController::class);
+    Route::post('category/datatable', [CategoryController::class,'datatable'])->name('category.datatable');
+
 });
 
 

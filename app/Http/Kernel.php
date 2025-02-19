@@ -76,4 +76,11 @@ class Kernel extends HttpKernel
         'showMenu' => AddShowMenu::class,
     ];
 
+    /**
+     * @var \class-string[]
+     */
+    protected $commands = [
+        \App\Console\Commands\ClearRedis::class,
+    ];
+
 }

@@ -23,12 +23,12 @@ class AuthController extends Controller
 
             if ($user->is_admin) {
                 Redis::set('user_' . $user->id, json_encode([
-                    'name'  => $user->name,
+                    'namesurname'  => $user->name.' '.$user->surname,
                     'email' => $user->email,
                     'image' => $user->image,
                     'role'  => $user->role,
                     'isAdmin'  => $user->is_admin,
-                ]), 'EX', 3600);
+                ]), 'EX', 36000);
                 return redirect()->route('backoffice.dashboard');
             }
 
@@ -42,4 +42,21 @@ class AuthController extends Controller
     {
         echo 'test';
     }
+
+    public function logout(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user) {
+            Redis::del('user_' . $user->id);
+        }
+
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('backoffice.login');
+    }
+
 }

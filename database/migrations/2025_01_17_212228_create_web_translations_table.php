@@ -12,7 +12,6 @@ return new class () extends Migration {
     {
         Schema::create('web_translations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('foreign_id');
             $table->string('name', 255);
             $table->string('slug', 255);
             $table->text('short_description');
@@ -21,7 +20,6 @@ return new class () extends Migration {
             $table->text('meta_keywords');
             $table->text('meta_description');
             $table->string('language_code')->unique();
-            $table->enum('type', ['product', 'brand', 'category']);
             $table->timestamps();
         });
     }

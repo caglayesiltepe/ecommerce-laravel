@@ -12,6 +12,9 @@
         @endif
 
         <div class="layout-page">
+            @if (!empty($showMenu) && $showMenu)
+                @include('backoffice.include.navbar')
+            @endif
             @yield('content')
         </div>
     </div>

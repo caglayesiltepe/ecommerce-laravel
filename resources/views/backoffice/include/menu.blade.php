@@ -1,5 +1,4 @@
 <!-- Menu -->
-
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
 
@@ -29,7 +28,7 @@
     <ul class="menu-inner py-1">
         <!-- Dashboards -->
         <li class="menu-item active open">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <a href="{{route('backoffice.dashboard')}}" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti ti-smart-home"></i>
                 <div data-i18n="Dashboards">Dashboards</div>
             </a>
@@ -37,18 +36,18 @@
         </li>
 
         <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <a href="{{route('backoffice.category.index')}}" class="menu-link menu-toggle">
                 <i class='menu-icon tf-icons ti ti-files'></i>
                 <div data-i18n="Kategoriler">Kategoriler</div>
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="#" class="menu-link" target="_blank">
+                    <a href="{{route('backoffice.category.index')}}" class="menu-link">
                         <div data-i18n="Kategori Listesi">Kategori Listesi</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="#" class="menu-link" target="_blank">
+                    <a href="{{route('backoffice.category.create')}}" class="menu-link">
                         <div data-i18n="Kategori Ekle">Kategori Ekle</div>
                     </a>
                 </li>

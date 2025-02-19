@@ -36,6 +36,7 @@ class AdminMiddleware
             // return redirect()->route('homepage');
         }
 
+        view()->share('authUser', $userData);
         return $next($request);
 
     }
