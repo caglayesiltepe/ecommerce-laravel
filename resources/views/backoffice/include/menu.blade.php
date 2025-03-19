@@ -71,6 +71,11 @@
                         <div data-i18n="Ürün Ekle">Ürün Ekle</div>
                     </a>
                 </li>
+                <li class="menu-item">
+                    <a href="{{route('backoffice.attributeValue.index')}}" class="menu-link">
+                        <div data-i18n="Varyantlar">Varyantlar</div>
+                    </a>
+                </li>
             </ul>
         </li>
         <li class="menu-item">

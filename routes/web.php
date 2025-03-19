@@ -28,13 +28,13 @@ Route::middleware(['auth', 'admin','showMenu'])->prefix('backoffice')->name('bac
     Route::resource('category', CategoryController::class);
     Route::resource('product', ProductController::class);
     Route::resource('brand', BrandController::class);
-    Route::resource('attribute-value', AttributeValueController::class);
+    Route::resource('attributeValue', AttributeValueController::class);
     Route::get('/get-attribute-values/{attributeId}', [AttributeValueController::class, 'getAttributeValues']);
     Route::post('/openai/web-translation-send', [OpenAIController::class, 'webTranslationSend']);
     Route::post('category/datatable', [CategoryController::class,'datatable'])->name('category.datatable');
     Route::post('product/datatable', [ProductController::class,'datatable'])->name('product.datatable');
     Route::post('brand/datatable', [BrandController::class,'datatable'])->name('brand.datatable');
-    Route::post('attribute-value/datatable', [AttributeValueController::class,'datatable'])->name('attribute-value.datatable');
+    Route::post('attributeValue/datatable', [AttributeValueController::class,'datatable'])->name('attributeValue.datatable');
 
 });
 
