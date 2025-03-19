@@ -72,7 +72,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="{{route('backoffice.variant-value.create')}}" class="menu-link">
+                    <a href="{{route('backoffice.attributeValue.index')}}" class="menu-link">
                         <div data-i18n="Varyantlar">Varyantlar</div>
                     </a>
                 </li>

@@ -24,13 +24,11 @@ class AttributeValueService
     private function attributeValueDatatableFormat($attributeValues): object
     {
         return collect($attributeValues)->map(function ($attributeValue) {
-            if ($attributeValue['attribute_id'] === 0) {
                 return (object)[
                     'id' => $attributeValue['id'],
                     'name' => $attributeValue['web_translations'][0]['name'] ?? '',
                     'status' => $attributeValue['status'],
                 ];
-            }
         })->filter();
     }
 
@@ -94,47 +92,23 @@ class AttributeValueService
 
     public function attributeValueCreate(array $data): attributeValue
     {
-        $imagePath = $this->storeImage($data['image'] ?? null);
-        $smallImagePath = $this->storeImage($data['small_image'] ?? null);
-        $iconPath = $this->storeImage($data['icon'] ?? null);
-
         return $this->attributeValueRepository->create([
-            'parent_id' => $data['parent_id'],
+            'attribute_id' => $data['attribute_id'],
+            'extra' => $data['extra'],
             'display_order' => $data['display_order'],
             'status' => $data['status'],
-            'image' => $imagePath,
-            'small_image' => $smallImagePath,
-            'icon' => $iconPath
         ]);
     }
 
-    private function storeImage($image)
-    {
-        if ($image) {
-            return $image->store('images/attributeValue', 'public');
-        }
-        return null;
-    }
 
     public function attributeValueUpdate(int $id, array $data): attributeValue
     {
         $updateData = [
-            'parent_id' => $data['parent_id'],
+            'attribute_id' => $data['attribute_id'],
+            'extra' => $data['extra'],
             'display_order' => $data['display_order'],
             'status' => $data['status'],
         ];
-
-        if (!empty($data['image'])) {
-            $updateData['image'] = $this->storeImage($data['image']);
-        }
-
-        if (!empty($data['small_image'])) {
-            $updateData['small_image'] = $this->storeImage($data['small_image']);
-        }
-
-        if (!empty($data['icon'])) {
-            $updateData['icon'] = $this->storeImage($data['icon']);
-        }
 
         return $this->attributeValueRepository->update($id, $updateData);
     }
