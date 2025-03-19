@@ -4,9 +4,8 @@
 
 <title>@yield('title', 'Yönetim Paneli')</title>
 
-<meta name="description" content="Start your development with a Dashboard for Bootstrap 5"/>
-<meta name="keywords" content="dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
 <meta name="base-url" content="{{ url('/') }}">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <!-- Favicon -->
 <link rel="icon" type="image/x-icon"
@@ -18,6 +17,8 @@
 <link
     href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;ampdisplay=swap"
     rel="stylesheet">
+
+
 
 <!-- Icons -->
 <link rel="stylesheet" href="{{asset('backoffice/')}}/assets/vendor/fonts/fontawesome.css"/>
@@ -51,10 +52,8 @@
 <!-- Page -->
 <link rel="stylesheet" href="{{asset('backoffice/')}}/assets/vendor/css/pages/page-auth.css">
 
-<!-- Helpers -->
+<link rel="stylesheet" href="{{asset('backoffice/')}}//assets/vendor/libs/select2/select2.css" />
 <script src="{{asset('backoffice/')}}/assets/vendor/js/helpers.js"></script>
-
 <script src="{{asset('backoffice/')}}/assets/js/config.js"></script>
-<link rel="stylesheet" href="{{asset('backoffice/')}}/assets/vendor/libs/dropzone/dropzone.css" />
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

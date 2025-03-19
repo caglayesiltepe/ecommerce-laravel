@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backoffice;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Services\CategoryService;
+use App\Services\WebTranslationService;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -17,12 +18,14 @@ use Yajra\DataTables\DataTables;
 class CategoryController extends Controller
 {
     protected CategoryService $categoryService;
+    protected WebTranslationService $webTranslationService;
     const PROCESS_NAME = 'category';
     const REDIS_LIST_KEY = 'categories_list';
 
-    public function __construct(CategoryService $categoryService)
+    public function __construct(CategoryService $categoryService,WebTranslationService $webTranslationService)
     {
         $this->categoryService = $categoryService;
+        $this->webTranslationService = $webTranslationService;
     }
 
     public function index(): View
@@ -80,19 +83,7 @@ class CategoryController extends Controller
                 'status'
             ]));
 
-            $translations = collect($request->all())
-                ->filter(function ($value, $key) {
-                    return preg_match('/^(\w{2})_(name|slug|short_description|description|meta_title|meta_keywords|meta_description)$/', $key);
-                })
-                ->mapToGroups(function ($value, $key) {
-                    preg_match('/^(\w{2})_(name|slug|short_description|description|meta_title|meta_keywords|meta_description)$/', $key, $matches);
-                    return [$matches[1] => [$matches[2] => $value]];
-                })
-                ->map(function ($items) {
-                    return array_merge(...$items);
-                });
-
-            $this->categoryService->createTranslations($category, $translations->toArray());
+            $this->webTranslationService->createTranslations($category, $request);
 
             DB::commit();
             Redis::del(self::REDIS_LIST_KEY);
@@ -122,14 +113,7 @@ class CategoryController extends Controller
         return view('backoffice.category.update', ['process_name' => self::PROCESS_NAME, 'info' => $info, 'categories' => $categories]);
     }
 
-
-    public function edit(string $id)
-    {
-      //
-    }
-
-
-    public function update(Request $request, string $id)
+    public function update(CategoryRequest $request, string $id)
     {
         try {
             DB::beginTransaction();
@@ -143,19 +127,7 @@ class CategoryController extends Controller
                 'status'
             ]));
 
-            $translations = collect($request->all())
-                ->filter(function ($value, $key) {
-                    return preg_match('/^(\w{2})_(name|slug|short_description|description|meta_title|meta_keywords|meta_description)$/', $key);
-                })
-                ->mapToGroups(function ($value, $key) {
-                    preg_match('/^(\w{2})_(name|slug|short_description|description|meta_title|meta_keywords|meta_description)$/', $key, $matches);
-                    return [$matches[1] => [$matches[2] => $value]];
-                })
-                ->map(function ($items) {
-                    return array_merge(...$items);
-                });
-
-            $this->categoryService->updateTranslations($category, $translations->toArray());
+            $this->webTranslationService->updateTranslations($category, $request);
 
             DB::commit();
             Redis::del(self::REDIS_LIST_KEY);

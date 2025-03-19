@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class ProductVariant extends Model
 {
@@ -13,19 +14,24 @@ class ProductVariant extends Model
 
     protected $table = 'product_variants';
 
-    /**
-     * @return BelongsTo
-     */
-    public function product(): BelongsTo
-    {
-        return $this->belongsTo(Product::class);
-    }
+    protected $guarded = ['id', 'created_at', 'updated_at'];
+
+    protected $fillable = ['product_id', 'attribute_value_id', 'ean','stock','sku','display_order','status'];
 
     /**
      * @return HasMany
      */
     public function attribute(): HasMany{
         return $this->HasMany(AttributeValue::class);
+    }
+
+
+    /**
+     * @return MorphTo
+     */
+    public function varianttable(): MorphTo
+    {
+        return $this->morphTo();
     }
 
 }

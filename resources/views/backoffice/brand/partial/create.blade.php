@@ -1,18 +1,29 @@
-<div class="row">
-    <div class="card mb-6">
-        <div class="card-header">
-            <div
-                class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-6 row-gap-4">
-
-            <div class="d-flex flex-column justify-content-center">
-            <h5 class="card-title mb-0">İçerik</h5>
+<div class="offcanvas offcanvas-end" id="add-new-brand">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="exampleModalLabel">Yeni Marka</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body flex-grow-1">
+        <form class="add-new-record pt-0 row g-2" id="brandForm" name="brandForm"
+              enctype="multipart/form-data">
+            @csrf
+            <div class="row">
+                <div class="form-check form-switch mb-2">
+                    <input class="form-check-input" value="1" type="checkbox" id="status" name="status" checked>
+                    <label class="form-check-label" for="status">Aktif/Pasif</label>
+                </div>
             </div>
-            <div class="d-flex align-content-center flex-wrap gap-4">
-            <button id="openai_button_web_translations" name="openai_button_web_translations" type="button" class="btn rounded-pill btn-outline-primary waves-effect"><span class="icon-xs icon-base ti tabler-star me-2"></span> OpenAI ile İçerikleri Doldur</button>
+            <div class="row">
+                <div class="col"><label class="form-label">Sıra</label>
+                    <input type="number" class="form-control"
+                           placeholder="Sıra" name="display_order" id="display_order"></div>
             </div>
+            <div class="row">
+                <div class="col">
+                    <label class="form-label">Logo</label>
+                    <input class="form-control" type="file" id="logo" name="logo">
+                </div>
             </div>
-            </div>
-        <div class="card-body">
             <div class="row">
                 <ul class="nav nav-tabs nav-fill" role="tablist">
                     <li class="nav-item">
@@ -71,7 +82,7 @@
                         <div class="row pt-5">
                             <div class="col">
                                 <label class="form-label">Açıklama</label>
-                                <textarea class="ckeditor" name="tr_description"
+                                <textarea class="form-control" name="tr_description"
                                           id="tr_description"></textarea>
                             </div>
                         </div>
@@ -116,13 +127,19 @@
                         <div class="row pt-5">
                             <div class="col">
                                 <label class="form-label">Açıklama</label>
-                                <textarea class="ckeditor" name="en_description"
+                                <textarea class="form-control" name="en_description"
                                           id="en_description"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="col-sm-12">
+                <button type="button" onclick="createForm()" id="brandFormButton"
+                        class="btn btn-primary data-submit me-sm-4 me-1">Ekle
+                </button>
+                <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">İptal</button>
+            </div>
+        </form>
     </div>
 </div>

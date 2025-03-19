@@ -16,7 +16,7 @@
                     <p class="mb-0">Lütfen gerekli alanları doldurunuz.</p>
                 </div>
                 <div class="d-flex align-content-center flex-wrap gap-4">
-                    <button type="button" onclick="updateForm()" class="btn btn-primary" id="categoryFormButton">Kaydet</button>
+                    <button type="button" onclick="updateForm()" class="btn btn-primary" id="brandUpdateFormButton">Kaydet</button>
                 </div>
             </div>
             @include('backoffice.category.partial.category_info')

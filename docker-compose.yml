@@ -1,26 +1,32 @@
+version: '3.8'
+
 services:
     app:
         build:
-            context: .  # Proje dosyalarını bağla
+            context: .
             dockerfile: Dockerfile
         container_name: pay-collet-app
         volumes:
-            - .:/var/www  # Uygulama dosyalarını konteyner içerisine bağla
+            - .:/var/www:cached
         networks:
             - laravel
         depends_on:
-            - redis  # Redis'e bağlı olacak
+            - redis
+        environment:
+            - PHP_MEMORY_LIMIT=1024M
 
     nginx:
         image: nginx:latest
         container_name: nginx
         ports:
-            - "8000:8000"  # 8000 portunu açıyoruz
+            - "8000:8000"
         volumes:
-            - .:/var/www  # Proje dosyalarını Nginx konteynerine bağlıyoruz
-            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf  # Nginx konfigürasyonu
+            - .:/var/www:rw  # Dosya izinlerini koru
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
         networks:
             - laravel
+        depends_on:
+            - app
 
     db:
         image: mysql:5.7
@@ -31,9 +37,9 @@ services:
             MYSQL_USER: ecommerce-user
             MYSQL_PASSWORD: 1
         ports:
-            - "3308:3306"  # MySQL'in dışarıya port 3306 açmasını sağlıyoruz
+            - "3308:3306"
         volumes:
-            - dbdata:/var/lib/mysql  # MySQL veritabanı verileri
+            - dbdata:/var/lib/mysql
         networks:
             - laravel
 
@@ -49,8 +55,8 @@ services:
             - REDIS_PASSWORD=${REDIS_PASSWORD}
 
 volumes:
-    dbdata:  # MySQL verileri için kalıcı depolama
+    dbdata:
 
 networks:
     laravel:
-        driver: bridge  # Ağ yapılandırması
+        driver: bridge

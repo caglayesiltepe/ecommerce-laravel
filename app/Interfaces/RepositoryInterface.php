@@ -12,9 +12,10 @@ interface RepositoryInterface
 
     /**
      * @param int $id
+     * @param string $where
      * @return mixed
      */
-    public function getFindById(int $id): mixed;
+    public function getFindById(int $id,string $where = 'id'): mixed;
 
     /**
      * @param array $data

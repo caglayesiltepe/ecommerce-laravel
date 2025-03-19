@@ -12,11 +12,13 @@ class Brand extends Model
 
     protected $table = 'brands';
 
+    protected $fillable = ['logo','status','display_order'];
+
     /**
      * @return MorphMany
      */
     public function webTranslations(): MorphMany
     {
-        return $this->morphMany(WebTranslation::class, 'translatable', 'type', 'foreign_id');
+        return $this->morphMany(WebTranslation::class, 'translatable');
     }
 }

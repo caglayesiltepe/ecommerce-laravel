@@ -24,7 +24,7 @@ class CategoryRepository implements RepositoryInterface
         } else {
             $categories = Category::with(['webTranslations' => function ($query) use ($language) {
                 $query->where('language_code', $language);
-            }])->get()->toArray();
+            }])->orderBy('display_order', 'DESC')->get()->toArray();
             Redis::setex($redisKey, 3600, json_encode($categories));
             return $categories;
         }
@@ -32,11 +32,12 @@ class CategoryRepository implements RepositoryInterface
 
     /**
      * @param int $id
+     * @param string $where
      * @return mixed
      */
-    public function getFindById(int $id): mixed
+    public function getFindById(int $id,string $where = 'id'): mixed
     {
-        return Category::with(['webTranslations'])->where('id', $id)->get()->toArray();
+        return Category::with(['webTranslations'])->where($where, $id)->orderBy('display_order', 'DESC')->get()->toArray();
     }
 
     /**

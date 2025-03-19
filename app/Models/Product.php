@@ -21,7 +21,23 @@ class Product extends Model
      */
     public function webTranslations(): MorphMany
     {
-        return $this->morphMany(WebTranslation::class, 'translatable', 'type', 'foreign_id');
+        return $this->morphMany(WebTranslation::class, 'translatable');
+    }
+
+    /**
+     * @return MorphMany
+     */
+    public function prices():MorphMany
+    {
+        return $this->morphMany(ProductPrice::class, 'pricesable');
+    }
+
+    /**
+     * @return MorphMany
+     */
+    public function variants(): MorphMany
+    {
+        return $this->morphMany(ProductVariant::class, 'varianttable');
     }
 
     /**

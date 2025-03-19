@@ -62,18 +62,30 @@
             <ul class="menu-sub">
 
                 <li class="menu-item">
-                    <a href="#" class="menu-link">
+                    <a href="{{route('backoffice.product.index')}}" class="menu-link">
                         <div data-i18n="Ürün Listesi">Ürün Listesi</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="#" class="menu-link">
+                    <a href="{{route('backoffice.product.create')}}" class="menu-link">
                         <div data-i18n="Ürün Ekle">Ürün Ekle</div>
                     </a>
                 </li>
             </ul>
         </li>
-
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons ti ti-layout-sidebar"></i>
+                <div data-i18n="Markalar">Markalar</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{route('backoffice.brand.index')}}" class="menu-link">
+                        <div data-i18n="Marka Listesi">Marka Listesi</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="menu-header small">
             <span class="menu-header-text" data-i18n="Web">Web</span>
         </li>

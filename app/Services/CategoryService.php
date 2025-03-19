@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Interfaces\RepositoryInterface;
 use App\Models\Category;
-use Illuminate\Support\Facades\Redis;
 
 class CategoryService
 {
@@ -107,54 +106,27 @@ class CategoryService
         return null;
     }
 
-    public function createTranslations(Category $category, array $translationsData): void
-    {
-        foreach ($translationsData as $languageCode => $data) {
-            $category->webTranslations()->create([
-                'name' => $data['name'] ?? null,
-                'slug' => $data['slug'] ?? null,
-                'short_description' => $data['short_description'] ?? null,
-                'description' => $data['description'] ?? null,
-                'meta_title' => $data['meta_title'] ?? null,
-                'meta_keywords' => $data['meta_keywords'] ?? null,
-                'meta_description' => $data['meta_description'] ?? null,
-                'language_code' => strtoupper($languageCode),
-            ]);
-        }
-    }
-
     public function categoryUpdate(int $id, array $data): Category
     {
-        $imagePath = $this->storeImage($data['image'] ?? null);
-        $smallImagePath = $this->storeImage($data['small_image'] ?? null);
-        $iconPath = $this->storeImage($data['icon'] ?? null);
-
-        return $this->categoryRepository->update($id, [
+        $updateData = [
             'parent_id' => $data['parent_id'],
             'display_order' => $data['display_order'],
             'status' => $data['status'],
-            'image' => $imagePath,
-            'small_image' => $smallImagePath,
-            'icon' => $iconPath
-        ]);
-    }
+        ];
 
-    public function updateTranslations(Category $category, array $translationsData): void
-    {
-        foreach ($translationsData as $languageCode => $data) {
-            $category->webTranslations()->updateOrCreate(
-                ['language_code' => strtoupper($languageCode)],
-                [
-                    'name' => $data['name'] ?? null,
-                    'slug' => $data['slug'] ?? null,
-                    'short_description' => $data['short_description'] ?? null,
-                    'description' => $data['description'] ?? null,
-                    'meta_title' => $data['meta_title'] ?? null,
-                    'meta_keywords' => $data['meta_keywords'] ?? null,
-                    'meta_description' => $data['meta_description'] ?? null,
-                ]
-            );
+        if (!empty($data['image'])) {
+            $updateData['image'] = $this->storeImage($data['image']);
         }
+
+        if (!empty($data['small_image'])) {
+            $updateData['small_image'] = $this->storeImage($data['small_image']);
+        }
+
+        if (!empty($data['icon'])) {
+            $updateData['icon'] = $this->storeImage($data['icon']);
+        }
+
+        return $this->categoryRepository->update($id, $updateData);
     }
 
     public function delete(int $categoryId): bool

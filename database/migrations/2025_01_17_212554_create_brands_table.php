@@ -12,7 +12,7 @@ return new class () extends Migration {
     {
         Schema::create('brands', function (Blueprint $table) {
             $table->id();
-            $table->string('logo');
+            $table->string('logo')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->integer('display_order')->default(0);
             $table->timestamps();
