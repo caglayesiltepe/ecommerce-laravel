@@ -5,7 +5,11 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+<<<<<<< HEAD
         container_name: pay-collet-app
+=======
+        container_name: ecommerce-app
+>>>>>>> 40aebec (maincommit)
         volumes:
             - .:/var/www:cached
         networks:
@@ -30,11 +34,19 @@ services:
 
     db:
         image: mysql:5.7
+<<<<<<< HEAD
         container_name: pay-collet-mysql-db
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: laravel-ecommerce
             MYSQL_USER: ecommerce-user
+=======
+        container_name: ecommerce-mysql-db
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: laravel-ecommerce
+            MYSQL_USER: laravel-ecommerce
+>>>>>>> 40aebec (maincommit)
             MYSQL_PASSWORD: 1
         ports:
             - "3308:3306"
@@ -45,7 +57,11 @@ services:
 
     redis:
         image: redis:latest
+<<<<<<< HEAD
         container_name: redis-container
+=======
+        container_name: ecommerce-redis-container
+>>>>>>> 40aebec (maincommit)
         command: redis-server --requirepass ${REDIS_PASSWORD}
         ports:
             - "6379:6379"
